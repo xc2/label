@@ -1,0 +1,155 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+
+exports[`parse ("//foo/bar:wiz") 1`] = `
+{
+  "includeSubPackages": false,
+  "package": "foo/bar",
+  "scope": "",
+  "target": "wiz",
+}
+`;
+
+exports[`parse ("//foo/bar") 1`] = `
+{
+  "includeSubPackages": false,
+  "package": "foo/bar",
+  "scope": "",
+  "target": "bar",
+}
+`;
+
+exports[`parse ("//foo/bar:all") 1`] = `
+{
+  "includeSubPackages": false,
+  "package": "foo/bar",
+  "scope": "",
+  "target": Symbol(All Rules Targets),
+}
+`;
+
+exports[`parse ("//foo/...") 1`] = `
+{
+  "includeSubPackages": true,
+  "package": "foo",
+  "scope": "",
+  "target": Symbol(All Rules Targets),
+}
+`;
+
+exports[`parse ("//foo/...:all") 1`] = `
+{
+  "includeSubPackages": true,
+  "package": "foo",
+  "scope": "",
+  "target": Symbol(All Rules Targets),
+}
+`;
+
+exports[`parse ("//foo/...:*") 1`] = `
+{
+  "includeSubPackages": true,
+  "package": "foo",
+  "scope": "",
+  "target": Symbol(All Targets (Rules and Files)),
+}
+`;
+
+exports[`parse ("//foo/...:all-targets") 1`] = `
+{
+  "includeSubPackages": true,
+  "package": "foo",
+  "scope": "",
+  "target": Symbol(All Targets (Rules and Files)),
+}
+`;
+
+exports[`parse ("//...") 1`] = `
+{
+  "includeSubPackages": true,
+  "package": "",
+  "scope": "",
+  "target": Symbol(All Rules Targets),
+}
+`;
+
+exports[`parse ("//:all") 1`] = `
+{
+  "includeSubPackages": false,
+  "package": "",
+  "scope": "",
+  "target": Symbol(All Rules Targets),
+}
+`;
+
+exports[`parse (":foo") 1`] = `
+{
+  "includeSubPackages": false,
+  "package": "",
+  "scope": Symbol(Relative so unknown),
+  "target": "foo",
+}
+`;
+
+exports[`parse ("bar:wiz") 1`] = `
+{
+  "includeSubPackages": false,
+  "package": "bar",
+  "scope": Symbol(Relative so unknown),
+  "target": "wiz",
+}
+`;
+
+exports[`parse ("bar/wiz") 1`] = `
+{
+  "includeSubPackages": false,
+  "package": "bar/wiz",
+  "scope": Symbol(Relative so unknown),
+  "target": "wiz",
+}
+`;
+
+exports[`parse ("bar:all") 1`] = `
+{
+  "includeSubPackages": false,
+  "package": "bar",
+  "scope": Symbol(Relative so unknown),
+  "target": Symbol(All Rules Targets),
+}
+`;
+
+exports[`parse (":all") 1`] = `
+{
+  "includeSubPackages": false,
+  "package": "",
+  "scope": Symbol(Relative so unknown),
+  "target": Symbol(All Rules Targets),
+}
+`;
+
+exports[`parse ("...:all") 1`] = `
+{
+  "includeSubPackages": true,
+  "package": "",
+  "scope": Symbol(Relative so unknown),
+  "target": Symbol(All Rules Targets),
+}
+`;
+
+exports[`parse ("...") 1`] = `
+{
+  "includeSubPackages": true,
+  "package": "",
+  "scope": Symbol(Relative so unknown),
+  "target": Symbol(All Rules Targets),
+}
+`;
+
+exports[`parse ("bar/...:all") 1`] = `
+{
+  "includeSubPackages": true,
+  "package": "bar",
+  "scope": Symbol(Relative so unknown),
+  "target": Symbol(All Rules Targets),
+}
+`;

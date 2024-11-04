@@ -1,0 +1,6 @@
+{
+  "compilerOptions": {
+    "types": ["@jest/types"]
+  },
+  "include": ["**/*.test.*", "__tests__", "__tests__/*.cjs"]
+}
