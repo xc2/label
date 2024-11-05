@@ -1,5 +1,5 @@
 import { InvalidLabel } from "./exceptions.js";
-import { type Label, SpecialScopes, SpecialTargetTypes } from "./label.js";
+import { type Label, SpecialTargetTypes } from "./label.js";
 
 function determineTarget(target: string, packageLastPart: string) {
   if (target) {
@@ -40,7 +40,7 @@ export function parse(label: string): Label {
   const target = determineTarget(_targetName, packageLastPart);
 
   return {
-    scope: _scope ? _repoName || "" : SpecialScopes.UNKNOWN,
+    scope: _scope ? _repoName || "" : false,
     package: packagePath,
     includeSubPackages,
     target,

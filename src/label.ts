@@ -3,18 +3,18 @@ export const SpecialTargetTypes = {
   ALL_RULES: Symbol.for("All Rules Targets"),
 } as const;
 
-export const SpecialScopes = {
-  UNKNOWN: Symbol.for("Relative so unknown"),
-};
 export interface Label {
-  scope: string | symbol;
+  scope: string | false;
   package: string;
   includeSubPackages: boolean;
   target: symbol | string;
 }
+export interface AbsoluteLabel extends Label {
+  scope: string;
+}
 
-export function isRelative(label: Label) {
-  return label.scope === SpecialScopes.UNKNOWN;
+export function isRelative(label: Label): label is AbsoluteLabel {
+  return label.scope === false;
 }
 export function isWorkspaceScope(label: Label) {
   return label.scope === "";

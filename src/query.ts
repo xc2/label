@@ -3,8 +3,10 @@ import { type ExactLabel, type Label, SpecialTargetTypes } from "./label.js";
 import { parse } from "./parse.js";
 
 export interface PackageLookupResult {
-  scope: string;
-  package: string;
+  label: {
+    scope: string;
+    package: string;
+  };
   buildfile: string;
 }
 export interface TargetFilter {
@@ -45,7 +47,7 @@ export class TargetQuery {
         throw new NoMatchedPackages(label);
       }
       for (const pkg of packages) {
-        const sl = `${pkg.scope}//${pkg.package}`;
+        const sl = `${pkg.label.scope}//${pkg.label.package}`;
 
         if (!map[sl]) {
           map[sl] = { pkg, includes: [], excludes: [] };
@@ -59,7 +61,7 @@ export class TargetQuery {
       const filter = getFilter({ includes, excludes });
       const targets = (await this.config.lookupTargets(pkg, filter)).map((v) => ({
         ...v,
-        label: { ...pkg, target: v.target, includeSubPackages: false },
+        label: { ...pkg.label, target: v.target, includeSubPackages: false },
       }));
       for (const { label, rule, file } of targets) {
         if (rule || file) {

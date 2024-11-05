@@ -1,6 +1,5 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-
 exports[`parse ("//foo/bar:wiz") 1`] = `
 {
   "includeSubPackages": false,
@@ -86,7 +85,7 @@ exports[`parse (":foo") 1`] = `
 {
   "includeSubPackages": false,
   "package": "",
-  "scope": Symbol(Relative so unknown),
+  "scope": false,
   "target": "foo",
 }
 `;
@@ -95,7 +94,7 @@ exports[`parse ("bar:wiz") 1`] = `
 {
   "includeSubPackages": false,
   "package": "bar",
-  "scope": Symbol(Relative so unknown),
+  "scope": false,
   "target": "wiz",
 }
 `;
@@ -104,7 +103,7 @@ exports[`parse ("bar/wiz") 1`] = `
 {
   "includeSubPackages": false,
   "package": "bar/wiz",
-  "scope": Symbol(Relative so unknown),
+  "scope": false,
   "target": "wiz",
 }
 `;
@@ -113,7 +112,7 @@ exports[`parse ("bar:all") 1`] = `
 {
   "includeSubPackages": false,
   "package": "bar",
-  "scope": Symbol(Relative so unknown),
+  "scope": false,
   "target": Symbol(All Rules Targets),
 }
 `;
@@ -122,7 +121,7 @@ exports[`parse (":all") 1`] = `
 {
   "includeSubPackages": false,
   "package": "",
-  "scope": Symbol(Relative so unknown),
+  "scope": false,
   "target": Symbol(All Rules Targets),
 }
 `;
@@ -131,7 +130,7 @@ exports[`parse ("...:all") 1`] = `
 {
   "includeSubPackages": true,
   "package": "",
-  "scope": Symbol(Relative so unknown),
+  "scope": false,
   "target": Symbol(All Rules Targets),
 }
 `;
@@ -140,7 +139,7 @@ exports[`parse ("...") 1`] = `
 {
   "includeSubPackages": true,
   "package": "",
-  "scope": Symbol(Relative so unknown),
+  "scope": false,
   "target": Symbol(All Rules Targets),
 }
 `;
@@ -149,7 +148,7 @@ exports[`parse ("bar/...:all") 1`] = `
 {
   "includeSubPackages": true,
   "package": "bar",
-  "scope": Symbol(Relative so unknown),
+  "scope": false,
   "target": Symbol(All Rules Targets),
 }
 `;

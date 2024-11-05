@@ -2,5 +2,5 @@
   "compilerOptions": {
     "types": ["@jest/types"]
   },
-  "include": ["**/*.test.*", "__tests__", "__tests__/*.cjs"]
+  "include": ["**/*.test.*", "e2e"]
 }
