@@ -16,8 +16,17 @@ export interface AbsoluteLabel extends Label {
 export function isRelative(label: Label): label is AbsoluteLabel {
   return label.scope === false;
 }
-export function isWorkspaceScope(label: Label) {
-  return label.scope === "";
+export function isWorkspaceScope(scope) {
+  return scope === "";
+}
+export function extractRepo(scope: string): [string, "@" | "@@" | null] {
+  if (scope[0] === "@" && scope[1] === "@") {
+    return [scope.slice(2), "@@"];
+  } else if (scope[0] === "@") {
+    return [scope.slice(1), "@"];
+  } else {
+    return [scope, null];
+  }
 }
 
 export function clone(label: Label) {
