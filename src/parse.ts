@@ -1,22 +1,12 @@
 import { InvalidLabel } from "./exceptions.js";
-import { type Label, SpecialTargetTypes } from "./label.js";
+import type { AbsoluteLabel, Label } from "./label.js";
 
-function determineTarget(target: string, packageLastPart: string) {
+function determineTarget(target: string, packageLastPart: string): string {
   if (target) {
-    if (["*", "all-targets"].includes(target)) {
-      // :*, :all-targets
-      return SpecialTargetTypes.ALL_TARGETS;
-    } else if (target === "all") {
-      // :all
-      return SpecialTargetTypes.ALL_RULES;
-    } else {
-      // :foo, :foo.bzl
-      return target;
-    }
+    return target;
   } else {
     if (packageLastPart === "...") {
-      // //...
-      return SpecialTargetTypes.ALL_RULES;
+      return target;
     } else {
       // //foo
       return packageLastPart;
@@ -24,11 +14,14 @@ function determineTarget(target: string, packageLastPart: string) {
   }
 }
 
-export function parse(label: string): Label {
+export function parse(label: string | Label): Label {
+  if (typeof label !== "string") {
+    return label;
+  }
   const [match, _scope, _repoName, _packagePath, _targetName] =
     label.match(
-      //12222222211111  3333333    4444
-      /^(([^\/]+)?\/\/)?([^:]*)(?::(.+))?/
+      //12222222211111  3333333333333333333    444444
+      /^(([^\/]+)?\/\/)?([^:.]*(?:\.\.\.)?)(?::([^:]+))?$/
     ) || [];
   if (!match) {
     throw new InvalidLabel(label);
@@ -45,4 +38,12 @@ export function parse(label: string): Label {
     includeSubPackages,
     target,
   } as Label;
+}
+
+export function validateAbsolute(label: string | Label): AbsoluteLabel {
+  const l = parse(label);
+  if (l.scope !== false) {
+    return l as AbsoluteLabel;
+  }
+  throw new InvalidLabel(label, "must be an absolute label");
 }

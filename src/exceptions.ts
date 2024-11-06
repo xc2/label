@@ -2,8 +2,11 @@ import { build } from "./build.js";
 import type { Label } from "./label.js";
 
 export class InvalidLabel extends Error {
-  constructor(public label: string) {
-    super(`Cannot parse label: ${label}`);
+  readonly label: string;
+  constructor(label: string | Label, message?: string) {
+    label = typeof label === "string" ? label : build(label);
+    super(message || `invalid label: ` + label);
+    this.label = label;
   }
 }
 

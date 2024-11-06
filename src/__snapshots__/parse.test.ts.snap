@@ -23,7 +23,7 @@ exports[`parse ("//foo/bar:all") 1`] = `
   "includeSubPackages": false,
   "package": "foo/bar",
   "scope": "",
-  "target": Symbol(All Rules Targets),
+  "target": "all",
 }
 `;
 
@@ -32,7 +32,7 @@ exports[`parse ("//foo/...") 1`] = `
   "includeSubPackages": true,
   "package": "foo",
   "scope": "",
-  "target": Symbol(All Rules Targets),
+  "target": undefined,
 }
 `;
 
@@ -41,7 +41,7 @@ exports[`parse ("//foo/...:all") 1`] = `
   "includeSubPackages": true,
   "package": "foo",
   "scope": "",
-  "target": Symbol(All Rules Targets),
+  "target": "all",
 }
 `;
 
@@ -50,7 +50,7 @@ exports[`parse ("//foo/...:*") 1`] = `
   "includeSubPackages": true,
   "package": "foo",
   "scope": "",
-  "target": Symbol(All Targets (Rules and Files)),
+  "target": "*",
 }
 `;
 
@@ -59,7 +59,7 @@ exports[`parse ("//foo/...:all-targets") 1`] = `
   "includeSubPackages": true,
   "package": "foo",
   "scope": "",
-  "target": Symbol(All Targets (Rules and Files)),
+  "target": "all-targets",
 }
 `;
 
@@ -68,7 +68,7 @@ exports[`parse ("//...") 1`] = `
   "includeSubPackages": true,
   "package": "",
   "scope": "",
-  "target": Symbol(All Rules Targets),
+  "target": undefined,
 }
 `;
 
@@ -77,7 +77,7 @@ exports[`parse ("//:all") 1`] = `
   "includeSubPackages": false,
   "package": "",
   "scope": "",
-  "target": Symbol(All Rules Targets),
+  "target": "all",
 }
 `;
 
@@ -113,7 +113,7 @@ exports[`parse ("bar:all") 1`] = `
   "includeSubPackages": false,
   "package": "bar",
   "scope": false,
-  "target": Symbol(All Rules Targets),
+  "target": "all",
 }
 `;
 
@@ -122,7 +122,7 @@ exports[`parse (":all") 1`] = `
   "includeSubPackages": false,
   "package": "",
   "scope": false,
-  "target": Symbol(All Rules Targets),
+  "target": "all",
 }
 `;
 
@@ -131,7 +131,7 @@ exports[`parse ("...:all") 1`] = `
   "includeSubPackages": true,
   "package": "",
   "scope": false,
-  "target": Symbol(All Rules Targets),
+  "target": "all",
 }
 `;
 
@@ -140,7 +140,7 @@ exports[`parse ("...") 1`] = `
   "includeSubPackages": true,
   "package": "",
   "scope": false,
-  "target": Symbol(All Rules Targets),
+  "target": undefined,
 }
 `;
 
@@ -149,6 +149,6 @@ exports[`parse ("bar/...:all") 1`] = `
   "includeSubPackages": true,
   "package": "bar",
   "scope": false,
-  "target": Symbol(All Rules Targets),
+  "target": "all",
 }
 `;

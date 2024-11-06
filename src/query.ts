@@ -1,108 +1,101 @@
-import { NoMatchedPackages, NoMatchedTarget } from "./exceptions.js";
-import { type ExactLabel, type Label, SpecialTargetTypes } from "./label.js";
-import { parse } from "./parse.js";
+import { build } from "./build";
+import { InvalidLabel, NoMatchedPackages, NoMatchedTarget } from "./exceptions.js";
+import type { AbsoluteLabel, ExactLabel } from "./label.js";
+import { parse, validateAbsolute } from "./parse.js";
+import { resolve } from "./resolve";
 
-export interface PackageLookupResult {
-  label: {
-    scope: string;
-    package: string;
-  };
-  buildfile: string;
+export interface Spec<Target> {
+  validate: (label: AbsoluteLabel) => string | Error | void | undefined | null;
+  lookup: (label: AbsoluteLabel) => ExactLabel[] | Promise<ExactLabel[]>;
+  load: (pkg: ExactLabel) => Promise<Record<string, Target>>;
+  extract: (targets: Record<string, Target>, target: string) => string | string[] | null;
 }
-export interface TargetFilter {
-  /** all named targets to include */
-  exactly: string[];
-  /** -1: exclude all files/rules, 0: no file/rule filter, 1: include all files/rules */
-  comprehensively: Record<"files" | "rules", -1 | 0 | 1>;
-}
-
-export type TargetResult =
-  | { rule: unknown; file?: undefined }
-  | { file: unknown; rule?: undefined };
-
-export interface TargetQueryConfig {
+export interface TargetQueryConfig<Target> {
   allowUnmatched?: boolean;
-  lookupPackages: (label: Label) => PackageLookupResult[] | Promise<PackageLookupResult[]>;
-  lookupTargets: (
-    pkg: PackageLookupResult,
-    filter: TargetFilter
-  ) => Promise<({ target: string } & TargetResult)[]>;
 }
-export class TargetQuery {
-  constructor(public config: TargetQueryConfig) {}
-  async query(_labels: string[]): Promise<({ label: ExactLabel } & TargetResult)[]> {
+export class TargetQuery<Target> {
+  allowUnmatched: boolean;
+  constructor(
+    public readonly spec: Spec<Target>,
+    config: TargetQueryConfig<Target> = {}
+  ) {
+    this.allowUnmatched = config.allowUnmatched || false;
+  }
+  async query(_labels: string[], _base = "//"): Promise<Record<string, Target>> {
+    const base = validateAbsolute(_base);
     const filters = _labels.map((v) => {
       if (v.startsWith("-")) {
-        return { label: parse(v.slice(1)), negative: true };
+        return { label: resolve(base, parse(v.slice(1))), negative: true };
       }
-      return { label: parse(v), negative: false };
+      return { label: resolve(base, parse(v)), negative: false };
     });
+    for (const { label } of filters) {
+      const validated = this.spec.validate(label);
+      if (validated instanceof Error) {
+        throw validated;
+      } else if (typeof validated === "string") {
+        throw new InvalidLabel(label, validated);
+      }
+    }
     const map: Record<
       string,
-      { pkg: PackageLookupResult; includes: (string | symbol)[]; excludes: (string | symbol)[] }
+      {
+        buildfile: ExactLabel;
+        includes: string[];
+        excludes: string[];
+      }
     > = {};
     for (const { label, negative } of filters) {
-      const packages = await this.config.lookupPackages(label);
-      if (packages.length === 0 && !this.config.allowUnmatched) {
+      const packages = await this.spec.lookup(label);
+      if (packages.length === 0 && !this.allowUnmatched) {
         throw new NoMatchedPackages(label);
       }
       for (const pkg of packages) {
-        const sl = `${pkg.label.scope}//${pkg.label.package}`;
+        const sl = build(pkg);
 
         if (!map[sl]) {
-          map[sl] = { pkg, includes: [], excludes: [] };
+          map[sl] = { buildfile: pkg, includes: [], excludes: [] };
         }
         const list = negative ? map[sl].excludes : map[sl].includes;
         list.push(label.target);
       }
     }
-    const results: ({ label: ExactLabel } & TargetResult)[] = [];
-    for (const { pkg, includes, excludes } of Object.values(map)) {
-      const filter = getFilter({ includes, excludes });
-      const targets = (await this.config.lookupTargets(pkg, filter)).map((v) => ({
-        ...v,
-        label: { ...pkg.label, target: v.target, includeSubPackages: false },
-      }));
-      for (const { label, rule, file } of targets) {
-        if (rule || file) {
-          results.push({ label, rule, file } as any);
-        } else if (!this.config.allowUnmatched) {
-          throw new NoMatchedTarget(label);
+    const results: Record<string, Target> = {};
+    for (const { buildfile, includes, excludes } of Object.values(map)) {
+      const targets = await this.spec.load(buildfile);
+      const extract = (target: string) => {
+        const r = this.spec.extract(targets, target);
+        if (!r?.length && !this.allowUnmatched) {
+          throw new NoMatchedTarget({ ...buildfile, target });
         }
+        return (Array.isArray(r) ? r : [r]).filter(Boolean) as string[];
+      };
+      const filtered = filterTarget(extract, includes, excludes);
+      for (const target of filtered) {
+        results[build({ ...buildfile, target })] = targets[target];
       }
     }
     return results;
   }
 }
+function filterTarget(
+  getTargets: (target: string) => string[],
+  includes: string[],
+  excludes: string[]
+) {
+  const result = new Set<string>();
+  for (const inc of includes) {
+    const targets = getTargets(inc);
 
-function parseFilters(targets: (string | symbol)[]) {
-  const known = new Set<string>();
-  let allFiles = false,
-    allRules = false;
-  for (const v of targets) {
-    if (v === SpecialTargetTypes.ALL_TARGETS) {
-      allFiles = true;
-      allRules = true;
-    } else if (v === SpecialTargetTypes.ALL_RULES) {
-      allRules = true;
-    } else if (typeof v === "string") {
-      known.add(v);
+    for (const target of targets) {
+      result.add(target);
     }
   }
-  return { known, allFiles, allRules };
-}
-function getFilter({
-  includes,
-  excludes,
-}: { includes: (string | symbol)[]; excludes: (string | symbol)[] }): TargetFilter {
-  const inc = parseFilters(includes);
-  const exc = parseFilters(excludes);
-
-  const files = exc.allFiles ? -1 : inc.allFiles ? 1 : 0;
-  const rules = exc.allRules ? -1 : inc.allRules ? 1 : 0;
-
-  for (const v of exc.known) {
-    inc.known.delete(v);
+  for (const f of excludes) {
+    const targets = getTargets(f);
+    for (const target of targets) {
+      result.delete(target);
+    }
   }
-  return { exactly: Array.from(inc.known), comprehensively: { files, rules } };
+  return Array.from(result);
 }

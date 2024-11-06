@@ -1,20 +1,14 @@
 import { CannotResolveFromSubPackages } from "./exceptions.js";
-import { type Label, clone, isRelative } from "./label.js";
-import { parse } from "./parse.js";
+import { type Label, normalizePackage } from "./label.js";
 
-export function resolve(_from: string | Label, _to: string | Label): Label {
-  const from = typeof _from === "string" ? parse(_from) : _from;
-  const to = typeof _to === "string" ? parse(_to) : _to;
+export function resolve<F extends Label, T extends Partial<Label>>(from: F, to: T): F & T {
   if (from.includeSubPackages) {
     throw new CannotResolveFromSubPackages(from);
   }
-  if (!isRelative(to)) {
-    return clone(to);
-  }
   return {
-    scope: from.scope,
-    package: [from.package, to.package].filter(Boolean).join("/"),
-    includeSubPackages: to.includeSubPackages,
-    target: to.target,
-  };
+    scope: typeof to.scope === "string" ? to.scope : from.scope,
+    package: [from.package, to.package ?? ""].map(normalizePackage).filter(Boolean).join("/"),
+    includeSubPackages: to.includeSubPackages ?? from.includeSubPackages,
+    target: to.target ?? from.target,
+  } satisfies Label as any;
 }

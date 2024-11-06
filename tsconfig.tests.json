@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["@jest/types"]
+    "types": ["@types/bun"]
   },
   "include": ["**/*.test.*", "e2e"]
 }
