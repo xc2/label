@@ -4,6 +4,7 @@
   "scripts": {
     "build": "rslib build",
     "build:watch": "rslib build -w",
+    "build:self": "rslib build -c rslib-self.config.ts && rslib build -c .rslib.config.js",
     "prepack": "rslib build",
     "deploy": "npm pack",
     "prepare": "pnpm --package husky@9.1.1 dlx husky",
@@ -13,10 +14,16 @@
     "@biomejs/biome": "^1.9.4",
     "@rslib/core": "0.0.16",
     "@types/bun": "^1.1.13",
+    "@types/lodash-es": "^4.17.12",
+    "glob": "^11.0.0",
+    "lodash-es": "^4.17.21",
     "typescript": "^5.6.3"
   },
   "nano-staged": {
     "*.{js,ts,cts,mts}": "biome check --write --diagnostic-level=error --no-errors-on-unmatched"
   },
-  "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee"
+  "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee",
+  "dependencies": {
+    "esbuild": "^0.24.0"
+  }
 }

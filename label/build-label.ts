@@ -1,4 +1,4 @@
-import type { Label } from "./label.js";
+import type { Label } from "./label";
 
 export function build(parsed: Label): string {
   let label = "";

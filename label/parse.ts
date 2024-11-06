@@ -1,5 +1,5 @@
-import { InvalidLabel } from "./exceptions.js";
-import type { AbsoluteLabel, Label } from "./label.js";
+import { InvalidLabel } from "./exceptions";
+import type { AbsoluteLabel, Label } from "./label";
 
 function determineTarget(target: string, packageLastPart: string): string {
   if (target) {

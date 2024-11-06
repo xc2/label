@@ -1,5 +1,5 @@
-import { CannotResolveFromSubPackages } from "./exceptions.js";
-import { type Label, normalizePackage } from "./label.js";
+import { CannotResolveFromSubPackages } from "./exceptions";
+import { type Label, normalizePackage } from "./label";
 
 export function resolve<F extends Label, T extends Partial<Label>>(from: F, to: T): F & T {
   if (from.includeSubPackages) {
