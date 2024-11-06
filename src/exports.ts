@@ -4,3 +4,4 @@ export * from "./label.js";
 export * from "./parse.js";
 export * from "./query.js";
 export * from "./resolve.js";
+export * from "./specs/bazel-like.js";

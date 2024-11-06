@@ -1,4 +1,4 @@
-import { type Label, SpecialTargetTypes } from "./label.js";
+import type { Label } from "./label.js";
 
 export function build(parsed: Label): string {
   let label = "";
@@ -7,11 +7,7 @@ export function build(parsed: Label): string {
   }
 
   label += [parsed.package || "", parsed.includeSubPackages ? "..." : ""].filter(Boolean).join("/");
-  if (parsed.target === SpecialTargetTypes.ALL_TARGETS) {
-    label += ":*";
-  } else if (parsed.target === SpecialTargetTypes.ALL_RULES) {
-    label += ":all";
-  } else if (parsed.target && typeof parsed.target === "string") {
+  if (parsed.target) {
     label += `:${parsed.target}`;
   }
   return label;

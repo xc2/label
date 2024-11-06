@@ -1,52 +1,53 @@
 import { build } from "./build";
-import { NoMatchedPackages } from "./exceptions.js";
-import type { ExactLabel, Label } from "./label.js";
-import { parse } from "./parse.js";
+import { InvalidLabel, NoMatchedPackages } from "./exceptions.js";
+import type { AbsoluteLabel, ExactLabel } from "./label.js";
+import { parse, parseAbsolute } from "./parse.js";
+import { resolve } from "./resolve";
 
-export interface PackageLookupResult {
-  scope: string;
-  package: string;
-  includeSubPackages: false;
-  target: string;
+export interface Spec<Target> {
+  validate: (label: AbsoluteLabel) => string | Error | void | undefined | null;
+  lookup: (label: AbsoluteLabel) => ExactLabel[] | Promise<ExactLabel[]>;
+  load: (pkg: ExactLabel) => Promise<Record<string, Target>>;
+  extract: (targets: Record<string, Target>, target: string) => string | string[] | null;
 }
-export interface TargetFilter {
-  /** all named targets to include */
-  exactly: string[];
-  /** -1: exclude all files/rules, 0: no file/rule filter, 1: include all files/rules */
-  comprehensively: Record<"files" | "rules", -1 | 0 | 1>;
-}
-
-export type TargetResult =
-  | { rule: unknown; file?: undefined }
-  | { file: unknown; rule?: undefined };
-
-export interface TargetQueryConfig {
+export interface TargetQueryConfig<Target> {
   allowUnmatched?: boolean;
-  lookupPackages: (label: Label) => PackageLookupResult[] | Promise<PackageLookupResult[]>;
-  loadPackage: (
-    pkg: PackageLookupResult
-  ) => Promise<Record<"rules" | "files", undefined | Record<string, unknown>>>;
 }
-export class TargetQuery {
-  constructor(public config: TargetQueryConfig) {}
-  async query(_labels: string[]): Promise<({ label: ExactLabel } & TargetResult)[]> {
+export class TargetQuery<Target> {
+  allowUnmatched: boolean;
+  constructor(
+    public readonly spec: Spec<Target>,
+    config: TargetQueryConfig<Target> = {}
+  ) {
+    this.allowUnmatched = config.allowUnmatched || false;
+  }
+  async query(_labels: string[], _base = "//"): Promise<Record<string, Target>> {
+    const base = parseAbsolute(_base);
     const filters = _labels.map((v) => {
       if (v.startsWith("-")) {
-        return { label: parse(v.slice(1)), negative: true };
+        return { label: resolve(base, parse(v.slice(1))), negative: true };
       }
-      return { label: parse(v), negative: false };
+      return { label: resolve(base, parse(v)), negative: false };
     });
+    for (const { label } of filters) {
+      const validated = this.spec.validate(label);
+      if (validated instanceof Error) {
+        throw validated;
+      } else if (typeof validated === "string") {
+        throw new InvalidLabel(label, validated);
+      }
+    }
     const map: Record<
       string,
       {
-        buildfile: PackageLookupResult;
-        includes: (string | symbol)[];
-        excludes: (string | symbol)[];
+        buildfile: ExactLabel;
+        includes: string[];
+        excludes: string[];
       }
     > = {};
     for (const { label, negative } of filters) {
-      const packages = await this.config.lookupPackages(label);
-      if (packages.length === 0 && !this.config.allowUnmatched) {
+      const packages = await this.spec.lookup(label);
+      if (packages.length === 0 && !this.allowUnmatched) {
         throw new NoMatchedPackages(label);
       }
       for (const pkg of packages) {
@@ -59,21 +60,33 @@ export class TargetQuery {
         list.push(label.target);
       }
     }
-    const results: ({ label: ExactLabel } & TargetResult)[] = [];
+    const results: Record<string, Target> = {};
     for (const { buildfile, includes, excludes } of Object.values(map)) {
-      const targets = await this.config.loadPackage(buildfile);
+      const targets = await this.spec.load(buildfile);
+      const extract = (target: string) => {
+        const r = this.spec.extract(targets, target);
+        if (!r?.length && !this.allowUnmatched) {
+          throw new NoMatchedPackages({ ...buildfile, target });
+        }
+        return (Array.isArray(r) ? r : [r]).filter(Boolean) as string[];
+      };
+      const filtered = filterTarget(extract, includes, excludes);
+      for (const target of filtered) {
+        results[build({ ...buildfile, target })] = targets[target];
+      }
     }
     return results;
   }
 }
 function filterTarget(
-  getTargets: (target: string | symbol) => string[],
-  includes: (string | symbol)[],
-  excludes: (string | symbol)[]
+  getTargets: (target: string) => string[],
+  includes: string[],
+  excludes: string[]
 ) {
   const result = new Set<string>();
   for (const inc of includes) {
     const targets = getTargets(inc);
+
     for (const target of targets) {
       result.add(target);
     }
