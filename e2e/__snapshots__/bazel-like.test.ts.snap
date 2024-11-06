@@ -1,0 +1,106 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`bazel-like query should match specific taraget 1`] = `
+{
+  "//foo/bar:wiz": {
+    "rule": "this is wiz",
+    "type": "rule",
+  },
+}
+`;
+
+exports[`bazel-like query should match specific taraget 2`] = `
+{
+  "//foo/bar:file.txt": {
+    "file": "file.txt",
+    "type": "file",
+  },
+}
+`;
+
+exports[`bazel-like query should match default target if target is not given 1`] = `
+{
+  "//foo/bar:bar": {
+    "rule": "this is default target",
+    "type": "rule",
+  },
+}
+`;
+
+exports[`bazel-like query should match all rules if target is "all" 1`] = `
+{
+  "//foo/bar:bar": {
+    "rule": "this is default target",
+    "type": "rule",
+  },
+  "//foo/bar:wiz": {
+    "rule": "this is wiz",
+    "type": "rule",
+  },
+}
+`;
+
+exports[`bazel-like query should match all rules if package is ... 1`] = `
+{
+  "//foo/bar:bar": {
+    "rule": "this is default target",
+    "type": "rule",
+  },
+  "//foo/bar:wiz": {
+    "rule": "this is wiz",
+    "type": "rule",
+  },
+}
+`;
+
+exports[`bazel-like query should match all rules and files if target is "all-targets" 1`] = `
+{
+  "//foo/bar:bar": {
+    "rule": "this is default target",
+    "type": "rule",
+  },
+  "//foo/bar:file.txt": {
+    "file": "file.txt",
+    "type": "file",
+  },
+  "//foo/bar:wiz": {
+    "rule": "this is wiz",
+    "type": "rule",
+  },
+}
+`;
+
+exports[`bazel-like query should match all rules and files if target is "*" 1`] = `
+{
+  "//foo/bar:bar": {
+    "rule": "this is default target",
+    "type": "rule",
+  },
+  "//foo/bar:file.txt": {
+    "file": "file.txt",
+    "type": "file",
+  },
+  "//foo/bar:wiz": {
+    "rule": "this is wiz",
+    "type": "rule",
+  },
+}
+`;
+
+exports[`bazel-like query should exclude specific target 1`] = `
+{
+  "//foo/bar:bar": {
+    "rule": "this is default target",
+    "type": "rule",
+  },
+}
+`;
+
+exports[`bazel-like query should match repo target 1`] = `
+{
+  "@foo//:ababa": {
+    "rule": "ababa",
+    "type": "rule",
+  },
+}
+`;

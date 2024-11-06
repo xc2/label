@@ -20,8 +20,8 @@ export function parse(label: string | Label): Label {
   }
   const [match, _scope, _repoName, _packagePath, _targetName] =
     label.match(
-      //12222222211111  3333333    4444
-      /^(([^\/]+)?\/\/)?([^:]*)(?::(.+))?/
+      //12222222211111  3333333333333333333    444444
+      /^(([^\/]+)?\/\/)?([^:.]*(?:\.\.\.)?)(?::([^:]+))?$/
     ) || [];
   if (!match) {
     throw new InvalidLabel(label);
@@ -40,7 +40,7 @@ export function parse(label: string | Label): Label {
   } as Label;
 }
 
-export function parseAbsolute(label: string | Label): AbsoluteLabel {
+export function validateAbsolute(label: string | Label): AbsoluteLabel {
   const l = parse(label);
   if (l.scope !== false) {
     return l as AbsoluteLabel;

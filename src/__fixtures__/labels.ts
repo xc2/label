@@ -17,3 +17,5 @@ export const labels = [
   "...",
   "bar/...:all",
 ];
+
+export const invalids = ["//foo/.:a", "//foo:a:b"];

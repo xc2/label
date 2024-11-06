@@ -1,7 +1,7 @@
 import { build } from "./build";
-import { InvalidLabel, NoMatchedPackages } from "./exceptions.js";
+import { InvalidLabel, NoMatchedPackages, NoMatchedTarget } from "./exceptions.js";
 import type { AbsoluteLabel, ExactLabel } from "./label.js";
-import { parse, parseAbsolute } from "./parse.js";
+import { parse, validateAbsolute } from "./parse.js";
 import { resolve } from "./resolve";
 
 export interface Spec<Target> {
@@ -22,7 +22,7 @@ export class TargetQuery<Target> {
     this.allowUnmatched = config.allowUnmatched || false;
   }
   async query(_labels: string[], _base = "//"): Promise<Record<string, Target>> {
-    const base = parseAbsolute(_base);
+    const base = validateAbsolute(_base);
     const filters = _labels.map((v) => {
       if (v.startsWith("-")) {
         return { label: resolve(base, parse(v.slice(1))), negative: true };
@@ -66,7 +66,7 @@ export class TargetQuery<Target> {
       const extract = (target: string) => {
         const r = this.spec.extract(targets, target);
         if (!r?.length && !this.allowUnmatched) {
-          throw new NoMatchedPackages({ ...buildfile, target });
+          throw new NoMatchedTarget({ ...buildfile, target });
         }
         return (Array.isArray(r) ? r : [r]).filter(Boolean) as string[];
       };

@@ -12,3 +12,9 @@ export interface ExactLabel extends Label {
   scope: string;
   includeSubPackages: false;
 }
+
+export function normalizePackage(path: string) {
+  if (path === ".") return "";
+  if (path.startsWith("./")) return path.slice(2);
+  return path;
+}
