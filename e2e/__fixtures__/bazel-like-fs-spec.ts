@@ -1,7 +1,7 @@
 import NodePath from "node:path";
 import { Glob } from "bun";
-import type { AbsoluteLabel, ExactLabel } from "../../src/exports";
-import { BazelLikeSpec, resolve } from "../../src/exports";
+import type { AbsoluteLabel, ExactLabel } from "../../label/exports";
+import { BazelLikeSpec, resolve } from "../../label/exports";
 
 export class BazelLikeFsSpec extends BazelLikeSpec<any> {
   constructor(public resolvePackage: (label: AbsoluteLabel) => string) {

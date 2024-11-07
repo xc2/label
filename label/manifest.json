@@ -1,0 +1,28 @@
+{
+  "name": "@109cafe/label",
+  "version": "0.0.0-PLACEHOLDER",
+  "type": "module",
+  "description": "Library for parsing, resolving, and querying bazel-like label",
+  "types": "exports.d.ts",
+  "main": "exports.cjs",
+  "module": "exports.mjs",
+  "legacy": "exports.legacy.mjs",
+  "exports": {
+    ".": {
+      "require": "./exports.cjs",
+      "import": "./exports.mjs",
+      "legacy": "./exports.legacy.mjs",
+      "types": "./exports.d.ts"
+    },
+    "./*": {
+      "require": "./*.cjs",
+      "import": "./*.mjs",
+      "legacy": "./*.legacy.mjs",
+      "types": "./*.d.ts"
+    },
+    "./*.cjs": "./*.cjs",
+    "./*.mjs": "./*.mjs",
+    "./*.ts": "./*.ts",
+    "./package.json": "./package.json"
+  }
+}

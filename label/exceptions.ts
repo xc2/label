@@ -1,5 +1,5 @@
-import { build } from "./build.js";
-import type { Label } from "./label.js";
+import { build } from "./build-label";
+import type { Label } from "./label";
 
 export class InvalidLabel extends Error {
   readonly label: string;

@@ -9,8 +9,9 @@
     "strict": true,
     "noImplicitAny": true,
     "skipLibCheck": true,
-    "target": "ES2022"
+    "target": "ES2022",
+    "rootDir": ".."
   },
-  "include": ["label"],
+  "include": ["*"],
   "exclude": ["**/*.test.*", "**/__*__/**", "**/BUILD.ts"]
 }

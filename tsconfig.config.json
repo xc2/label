@@ -2,7 +2,8 @@
   "compilerOptions": {
     "moduleResolution": "Node16",
     "module": "Node16",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": ["./index.d.ts"]
   },
-  "include": ["rslib.config.ts"]
+  "include": ["rslib.config.ts", "**/BUILD.ts"]
 }

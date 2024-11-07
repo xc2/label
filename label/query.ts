@@ -1,7 +1,7 @@
-import { build } from "./build";
-import { InvalidLabel, NoMatchedPackages, NoMatchedTarget } from "./exceptions.js";
-import type { AbsoluteLabel, ExactLabel } from "./label.js";
-import { parse, validateAbsolute } from "./parse.js";
+import { build } from "./build-label";
+import { InvalidLabel, NoMatchedPackages, NoMatchedTarget } from "./exceptions";
+import type { AbsoluteLabel, ExactLabel } from "./label";
+import { parse, validateAbsolute } from "./parse";
 import { resolve } from "./resolve";
 
 export interface Spec<Target> {
@@ -10,14 +10,14 @@ export interface Spec<Target> {
   load: (pkg: ExactLabel) => Promise<Record<string, Target>>;
   extract: (targets: Record<string, Target>, target: string) => string | string[] | null;
 }
-export interface TargetQueryConfig<Target> {
+export interface TargetQueryConfig {
   allowUnmatched?: boolean;
 }
 export class TargetQuery<Target> {
   allowUnmatched: boolean;
   constructor(
     public readonly spec: Spec<Target>,
-    config: TargetQueryConfig<Target> = {}
+    config: TargetQueryConfig = {}
   ) {
     this.allowUnmatched = config.allowUnmatched || false;
   }

@@ -1,9 +1,0 @@
-{
-  "name": "@109cafe/label",
-  "version": "0.0.0-PLACEHOLDER",
-  "type": "module",
-  "description": "Parsing, resolving, and querying bazel-like label",
-  "types": "exports.d.ts",
-  "main": "exports.cjs",
-  "module": "exports.js"
-}
