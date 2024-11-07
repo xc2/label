@@ -4,6 +4,7 @@
   "type": "module",
   "main": "export.js",
   "types": "export.d.ts",
+  "license": "MIT",
   "dependencies": {
     "@109cafe/label": "^0.1.0"
   }

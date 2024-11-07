@@ -33,7 +33,7 @@ export default ({ tools, pkg }: Context): Record<string, LibConfig> => {
       },
       output: {
         distPath: { root: `./dist/${pkg}` },
-        copy: [{ from: `${pkg}/manifest.json`, to: "package.json" }],
+        copy: [{ from: `${pkg}/manifest.json`, to: "package.json" }, { from: `${pkg}/README.md` }],
       },
       dts: { bundle: false },
     },

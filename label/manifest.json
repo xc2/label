@@ -7,6 +7,7 @@
   "main": "exports.cjs",
   "module": "exports.mjs",
   "legacy": "exports.legacy.mjs",
+  "license": "MIT",
   "exports": {
     ".": {
       "require": "./exports.cjs",
