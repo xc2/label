@@ -5,8 +5,8 @@
     "build": "rslib build",
     "build:watch": "rslib build -w",
     "build:self": "rslib build -c rslib-self.config.ts && rslib build -c .rslib.config.js",
-    "prepack": "rslib build",
-    "deploy": "npm pack",
+    "pack:label": "pnpm build:self -- //label:all && npm pack ./dist/label --pack-destination ./dist/label",
+    "pack:dummy": "pnpm build:self -- //dummy-spec:all && npm pack ./dist/dummy-spec --pack-destination ./dist/dummy-spec",
     "prepare": "pnpm --package husky@9.1.1 dlx husky",
     "test": "pnpm --package bun@1.1.34 dlx bun test"
   },
