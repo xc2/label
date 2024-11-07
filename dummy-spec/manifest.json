@@ -1,0 +1,10 @@
+{
+  "name": "@109cafe/dummy",
+  "version": "0.0.0-PLACEHOLDER",
+  "type": "module",
+  "main": "export.js",
+  "types": "export.d.ts",
+  "dependencies": {
+    "@109cafe/label": "^0.1.0"
+  }
+}

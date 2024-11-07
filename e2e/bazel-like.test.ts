@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import * as NodePath from "node:path";
-import { InvalidLabel, NoMatchedPackages, NoMatchedTarget } from "../src/exceptions";
-import { TargetQuery } from "../src/query";
+import { InvalidLabel, NoMatchedPackages, NoMatchedTarget } from "../label/exceptions";
+import { TargetQuery } from "../label/query";
 import { BazelLikeFsSpec } from "./__fixtures__/bazel-like-fs-spec";
 
 const FixturesRoot = NodePath.resolve(__dirname, "__fixtures__");

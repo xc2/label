@@ -1,29 +1,28 @@
 import NodePath from "node:path";
+import { Glob, type GlobOptionsWithFileTypesUnset } from "glob";
 import {
   type AbsoluteLabel,
   BazelLikeSpec,
+  type BazelTarget,
   type ExactLabel,
   type Spec,
   build,
   resolve,
-} from "@109cafe/label/exports";
-import { Glob, type GlobOptionsWithFileTypesUnset } from "glob";
+} from "../label/exports";
 import { getContext } from "./context";
 import type { DummyBuildFileFn } from "./types";
+export interface DummySpecOptions {
+  ignore?: string[];
+  buildFileName?: string | string[];
+  resolveRepoRoot?: (v: string) => string;
+}
 
-export class DummySpec extends BazelLikeSpec<any> implements Spec<any> {
+export class DummySpec extends BazelLikeSpec<BazelTarget> implements Spec<BazelTarget> {
   readonly buildFileName: string[];
   readonly resolveRepoRoot?: (repoName: string) => string;
   readonly context: string;
   readonly globOptions: GlobOptionsWithFileTypesUnset;
-  constructor(
-    context: string,
-    options: {
-      ignore?: string[];
-      buildFileName?: string | string[];
-      resolveRepoRoot?: (v: string) => string;
-    } = {}
-  ) {
+  constructor(context: string, options: DummySpecOptions = {}) {
     super();
     this.context = context;
     if (!NodePath.isAbsolute(this.context)) {
@@ -84,13 +83,9 @@ export class DummySpec extends BazelLikeSpec<any> implements Spec<any> {
     const mod = (await import(path)) as
       | { default: DummyBuildFileFn }
       | { default: { default: DummyBuildFileFn } };
-    if (!mod.default) {
-      console.log(buildfile);
-    }
-    console.log(1, mod.default);
     let fn = "default" in mod.default ? mod.default.default : mod.default;
     fn = fn ?? (() => ({}));
-    const f = await fn(getContext());
+    const f = await fn(getContext({ workspace: this.context, pkg: buildfile.package }));
     const { rules, files = [] } = ("rules" in f || "files" in f ? f : { rules: f, files: [] }) as {
       rules: Record<string, unknown>;
       files: string[];
@@ -99,6 +94,6 @@ export class DummySpec extends BazelLikeSpec<any> implements Spec<any> {
     return {
       ...Object.fromEntries(Object.entries(rules).map(([k, v]) => [k, { type: "rule", rule: v }])),
       ...Object.fromEntries(files.map((v: string) => [v, { type: "file", file: v }])),
-    };
+    } as Record<string, BazelTarget>;
   }
 }

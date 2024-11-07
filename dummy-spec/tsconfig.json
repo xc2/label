@@ -10,10 +10,8 @@
     "noImplicitAny": true,
     "skipLibCheck": true,
     "target": "ES2022",
-    "baseUrl": ".",
-    "paths": {
-      "@109cafe/label/*": ["../label/*"]
-    }
+    "rootDir": ".."
   },
-  "include": ["*"]
+  "include": ["*"],
+  "exclude": ["**/*.test.*", "**/__*__/**", "**/BUILD.ts"]
 }

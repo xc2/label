@@ -19,8 +19,8 @@ export default defineConfig({
 
       output: {
         externals: ([] as ToArray<NonNullable<NonNullable<LibConfig["output"]>["externals"]>>)
-          .concat(Object.keys(a.dependencies))
-          .concat(Object.keys(a.devDependencies)),
+          .concat(Object.keys(a.dependencies ?? {}))
+          .concat(Object.keys(a.devDependencies ?? {})),
         target: "node",
         distPath: { root: "." },
         cleanDistPath: false,

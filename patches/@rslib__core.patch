@@ -1,0 +1,30 @@
+diff --git a/dist/index.js b/dist/index.js
+index cdf9ef8f88ecb3ce994e21a521de80edead0302e..3fbb9ab1674487ab08b2f1b35a35b20ce373b2a0 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -346,12 +346,12 @@ const pluginEsmRequireShim = ()=>({
+         }
+     });
+ const getDefaultExtension = (options)=>{
+-    const { format, pkgJson, autoExtension } = options;
++    const { format, pkgJson, autoExtension, redirect } = options;
+     let jsExtension = '.js';
+     let dtsExtension = '.d.ts';
+     if (!autoExtension) return {
+-        jsExtension,
+-        dtsExtension
++        jsExtension: redirect?.js || jsExtension,
++        dtsExtension: redirect?.dts || dtsExtension
+     };
+     if (!pkgJson) {
+         __WEBPACK_EXTERNAL_MODULE__compiled_rslog_index_js__.logger.warn('autoExtension configuration will not be applied due to read package.json failed');
+@@ -1768,7 +1768,8 @@ const composeAutoExtensionConfig = (config, autoExtension, pkgJson)=>{
+     const { jsExtension, dtsExtension } = getDefaultExtension({
+         format: config.format,
+         pkgJson,
+-        autoExtension
++        autoExtension,
++        redirect: config.redirect
+     });
+     return {
+         config: {
