@@ -26,6 +26,9 @@
   "pnpm": {
     "patchedDependencies": {
       "@rslib/core": "patches/@rslib__core.patch"
+    },
+    "overrides": {
+      "@rspack/core@1.0.14": "1.1.0"
     }
   }
 }
