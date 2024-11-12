@@ -65,17 +65,17 @@ export class TargetQuery<Target> {
   allowUnmatched: boolean;
 
   /**
+   * @internal
+   */
+  readonly spec: Spec<Target>;
+
+  /**
    * The spec for querying targets
    * @param spec - the spec of build system
    * @param config - configuration for `TargetQuery`
    */
-  constructor(
-    /**
-     * @internal
-     */
-    public readonly spec: Spec<Target>,
-    config: TargetQueryConfig = {}
-  ) {
+  constructor(spec: Spec<Target>, config: TargetQueryConfig = {}) {
+    this.spec = spec;
     this.allowUnmatched = config.allowUnmatched || false;
   }
 

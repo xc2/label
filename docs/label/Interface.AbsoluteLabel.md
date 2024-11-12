@@ -27,10 +27,6 @@ An absolute label is a label that must includes a scope
 
 [`Label`](Interface.Label.md).[`includeSubPackages`](Interface.Label.md#includesubpackages)
 
-#### Defined in
-
-[Developer/label/label/label.ts:29](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/label.ts#L29)
-
 ***
 
 ### package
@@ -50,10 +46,6 @@ The known part of package path of the package
 #### Inherited from
 
 [`Label`](Interface.Label.md).[`package`](Interface.Label.md#package)
-
-#### Defined in
-
-[Developer/label/label/label.ts:22](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/label.ts#L22)
 
 ***
 
@@ -77,10 +69,6 @@ empty string in `//foo`
 
 [`Label`](Interface.Label.md).[`scope`](Interface.Label.md#scope)
 
-#### Defined in
-
-[Developer/label/label/label.ts:45](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/label.ts#L45)
-
 ***
 
 ### target
@@ -100,7 +88,3 @@ The target of the package
 #### Inherited from
 
 [`Label`](Interface.Label.md).[`target`](Interface.Label.md#target)
-
-#### Defined in
-
-[Developer/label/label/label.ts:37](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/label.ts#L37)

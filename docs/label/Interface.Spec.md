@@ -32,10 +32,6 @@ the target name in a label
 
 the matched target names or `null` if not found
 
-#### Defined in
-
-[Developer/label/label/query.ts:36](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/query.ts#L36)
-
 ***
 
 ### load()
@@ -55,10 +51,6 @@ the label that is returned by `lookup`
 `Promise`\<`Record`\<`string`, `Target`\>\>
 
 a `<TargetName, Target>` map for the package
-
-#### Defined in
-
-[Developer/label/label/query.ts:29](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/query.ts#L29)
 
 ***
 
@@ -80,10 +72,6 @@ the label to lookup
 
 a list of matched packages presented by `ExactLabel`
 
-#### Defined in
-
-[Developer/label/label/query.ts:23](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/query.ts#L23)
-
 ***
 
 ### validate()
@@ -103,7 +91,3 @@ the label to validate
 `undefined` \| `null` \| `string` \| `void` \| `Error`
 
 a string or an `Error` for invalid label, and falsy values for valid label
-
-#### Defined in
-
-[Developer/label/label/query.ts:17](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/query.ts#L17)

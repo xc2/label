@@ -50,10 +50,6 @@ the matched target names or `null` if not found
 
 [`Spec`](Interface.Spec.md).[`extract`](Interface.Spec.md#extract)
 
-#### Defined in
-
-[Developer/label/label/specs/bazel-like.ts:57](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/specs/bazel-like.ts#L57)
-
 ***
 
 ### load()
@@ -77,10 +73,6 @@ a `<TargetName, Target>` map for the package
 #### Implementation of
 
 [`Spec`](Interface.Spec.md).[`load`](Interface.Spec.md#load)
-
-#### Defined in
-
-[Developer/label/label/specs/bazel-like.ts:69](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/specs/bazel-like.ts#L69)
 
 ***
 
@@ -106,10 +98,6 @@ a list of matched packages presented by `ExactLabel`
 
 [`Spec`](Interface.Spec.md).[`lookup`](Interface.Spec.md#lookup)
 
-#### Defined in
-
-[Developer/label/label/specs/bazel-like.ts:68](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/specs/bazel-like.ts#L68)
-
 ***
 
 ### validate()
@@ -133,7 +121,3 @@ a string or an `Error` for invalid label, and falsy values for valid label
 #### Implementation of
 
 [`Spec`](Interface.Spec.md).[`validate`](Interface.Spec.md#validate)
-
-#### Defined in
-
-[Developer/label/label/specs/bazel-like.ts:48](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/specs/bazel-like.ts#L48)

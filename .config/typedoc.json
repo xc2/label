@@ -8,5 +8,7 @@
   "flattenOutputFiles": true,
   "indexFormat": "table",
   "outputFileStrategy": "members",
-  "entryFileName": "index"
+  "entryFileName": "index",
+  "excludeInternal": true,
+  "disableSources": true
 }

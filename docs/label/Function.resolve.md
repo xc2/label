@@ -39,7 +39,3 @@ resolve({ package: "foo", target: "bar" }, { includeSubPackages: true }); // { p
 ## Throws
 
 [CannotResolveFromSubPackages](Class.CannotResolveFromSubPackages.md) if the `from` label includes subpackages
-
-## Defined in
-
-[Developer/label/label/resolve.ts:19](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/resolve.ts#L19)

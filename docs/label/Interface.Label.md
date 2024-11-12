@@ -22,10 +22,6 @@
 `false` in `//foo`
 ```
 
-#### Defined in
-
-[Developer/label/label/label.ts:29](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/label.ts#L29)
-
 ***
 
 ### package
@@ -41,10 +37,6 @@ The known part of package path of the package
 `foo/bar` in `//foo/bar`
 `foo` in `@npm//foo/...`
 ```
-
-#### Defined in
-
-[Developer/label/label/label.ts:22](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/label.ts#L22)
 
 ***
 
@@ -64,10 +56,6 @@ empty string in `//foo`
 `false` in `foo`
 ```
 
-#### Defined in
-
-[Developer/label/label/label.ts:14](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/label.ts#L14)
-
 ***
 
 ### target
@@ -83,7 +71,3 @@ The target of the package
 `wiz` in `//foo/bar/wiz` which includes an implicit target name
 `all` in `//foo:all` which includes all targets in most specs
 ```
-
-#### Defined in
-
-[Developer/label/label/label.ts:37](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/label.ts#L37)

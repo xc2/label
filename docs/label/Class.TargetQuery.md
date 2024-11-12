@@ -39,34 +39,6 @@ configuration for `TargetQuery`
 
 [`TargetQuery`](Class.TargetQuery.md)\<`Target`\>
 
-#### Defined in
-
-[Developer/label/label/query.ts:72](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/query.ts#L72)
-
-## Properties
-
-### allowUnmatched
-
-> **allowUnmatched**: `boolean`
-
-**`Internal`**
-
-#### Defined in
-
-[Developer/label/label/query.ts:65](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/query.ts#L65)
-
-***
-
-### spec
-
-> `readonly` **spec**: [`Spec`](Interface.Spec.md)\<`Target`\>
-
-**`Internal`**
-
-#### Defined in
-
-[Developer/label/label/query.ts:76](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/query.ts#L76)
-
 ## Methods
 
 ### query()
@@ -102,7 +74,3 @@ a `<TargetName, Target>` map of matched targets
 #### Throws
 
 [NoMatchedTarget](Class.NoMatchedTarget.md) if no matched targets are found
-
-#### Defined in
-
-[Developer/label/label/query.ts:92](https://github.com/xc2/label/blob/c12a0050bfe7ea4c2cc1dec2e68df3b1f8e58bda/label/query.ts#L92)
