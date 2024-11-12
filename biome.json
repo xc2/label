@@ -12,11 +12,11 @@
     }
   },
   "files": {
-    "ignore": ["worker-configuration.d.ts", "**/gen/**", "**/*.gen.*"]
+    "ignore": ["worker-configuration.d.ts", "**/gen/**", "**/*.gen.*", "**/docs/**"]
   },
   "overrides": [
     {
-      "include": [".vscode/*.json", "**/tsconfig.json"],
+      "include": [".vscode/*.json", "**/tsconfig.json", "**/api-extractor.json"],
       "json": { "parser": { "allowComments": true, "allowTrailingCommas": true } }
     }
   ],
