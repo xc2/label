@@ -14,6 +14,13 @@ function determineTarget(target: string, packageLastPart: string): string {
   }
 }
 
+/**
+ * Parse a label string into a `Label` object
+ * @public
+ * @param label - the label string to parse
+ * @throws {@link InvalidLabel} if the label is invalid
+ * @returns The parsed `Label` object
+ */
 export function parse(label: string | Label): Label {
   if (typeof label !== "string") {
     return label;
@@ -40,6 +47,12 @@ export function parse(label: string | Label): Label {
   } as Label;
 }
 
+/**
+ * Check if a label is with a scope
+ * @param label - the label to check
+ * @throws {@link InvalidLabel} if the label is not an absolute label
+ * @public
+ */
 export function validateAbsolute(label: string | Label): AbsoluteLabel {
   const l = parse(label);
   if (l.scope !== false) {

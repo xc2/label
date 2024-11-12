@@ -10,7 +10,21 @@ export default ({ tools, pkg }: Context): Record<string, LibConfig> => {
           main: [`${pkg}/**/*.ts`, "!**/*.spec.ts", "!**/*.test.ts", "!**/__*__", "!**/BUILD.ts"],
         },
       },
-      output: { distPath: { root: `./dist/${pkg}` } },
+      output: {
+        distPath: { root: `./dist/${pkg}` },
+        minify: {
+          jsOptions: {
+            minimizerOptions: {
+              compress: false,
+              mangle: false,
+              format: {
+                comments: "some",
+                beautify: true,
+              },
+            },
+          },
+        },
+      },
       bundle: false,
       dts: false,
     } satisfies LibConfig);
@@ -34,6 +48,7 @@ export default ({ tools, pkg }: Context): Record<string, LibConfig> => {
       output: {
         distPath: { root: `./dist/${pkg}` },
         copy: [{ from: `${pkg}/manifest.json`, to: "package.json" }, { from: `${pkg}/README.md` }],
+        minify: { js: false },
       },
       dts: { bundle: false },
     },

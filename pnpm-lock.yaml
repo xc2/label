@@ -16,6 +16,9 @@ importers:
 
   .:
     devDependencies:
+      '@109cafe/dummy':
+        specifier: ^0.1.1
+        version: 0.1.1
       '@biomejs/biome':
         specifier: ^1.9.4
         version: 1.9.4
@@ -39,6 +42,12 @@ importers:
         version: 5.6.3
 
 packages:
+
+  '@109cafe/dummy@0.1.1':
+    resolution: {integrity: sha512-Y+480VhP43mLQWEE6ftzkK+ILrwkn/uFGjp3M3wcb5+Hyh90HepPZI+xHoZtT3baEiTn9rFZ0Gc8FjdOl9tJFQ==}
+
+  '@109cafe/label@0.1.0':
+    resolution: {integrity: sha512-jiLDMDgIt+zgJ1ZN/rImBh19aOuFwK/F95h7WBFlbGK9v2k1NHAM06EVtGRKGvW8JfBC8Jeb9x38IqGPP5s9qA==}
 
   '@biomejs/biome@1.9.4':
     resolution: {integrity: sha512-1rkd7G70+o9KkTn5KLmDYXihGoTaIGO9PIIN2ZB7UJxFrWw04CZHPYiMRjYsaDvVV7hP1dYNRLxSANLaBFGpog==}
@@ -580,6 +589,12 @@ packages:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
 
 snapshots:
+
+  '@109cafe/dummy@0.1.1':
+    dependencies:
+      '@109cafe/label': 0.1.0
+
+  '@109cafe/label@0.1.0': {}
 
   '@biomejs/biome@1.9.4':
     optionalDependencies:

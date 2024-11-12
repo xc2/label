@@ -1,0 +1,12 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["../label/exports.ts"],
+  "readme": "none",
+  "out": "../docs/label",
+  "plugin": ["typedoc-plugin-markdown"],
+  "hidePageHeader": true,
+  "flattenOutputFiles": true,
+  "indexFormat": "table",
+  "outputFileStrategy": "members",
+  "entryFileName": "index"
+}

@@ -1,4 +1,4 @@
-import { DummyQuery } from "@109cafe/dummy-spec";
+import { DummyQuery } from "@109cafe/dummy";
 import { type LibConfig, defineConfig } from "@rslib/core";
 const tripleSlashIndex = process.argv.indexOf("--");
 let labels: string[] = [];

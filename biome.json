@@ -16,7 +16,7 @@
   },
   "overrides": [
     {
-      "include": [".vscode/*.json", "**/tsconfig.json"],
+      "include": [".vscode/*.json", "**/tsconfig.json", "**/api-extractor.json"],
       "json": { "parser": { "allowComments": true, "allowTrailingCommas": true } }
     }
   ],

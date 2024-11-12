@@ -1,14 +1,15 @@
 {
-  "name": "why-name-is-required-by-api-extractor",
+  "name": "@109cafe/label",
   "type": "module",
   "scripts": {
     "build": "rslib build",
     "build:watch": "rslib build -w",
     "build:self": "rslib build -c rslib-self.config.ts && rslib build -c .rslib.config.js",
-    "pack:label": "pnpm build:self -- //label:all && npm pack ./dist/label --pack-destination ./dist/label",
-    "pack:dummy": "pnpm build:self -- //dummy-spec:all && npm pack ./dist/dummy-spec --pack-destination ./dist/dummy-spec",
+    "pack:label": "pnpm build -- //label:all && npm pack ./dist/label --pack-destination ./dist/label",
+    "pack:dummy": "pnpm build -- //dummy-spec:all && npm pack ./dist/dummy-spec --pack-destination ./dist/dummy-spec",
     "prepare": "pnpm --package husky@9.1.1 dlx husky",
-    "test": "pnpm --package bun@1.1.34 dlx bun test"
+    "test": "pnpm --package bun@1.1.34 dlx bun test --coverage",
+    "docs": "pnpm --package typedoc-plugin-markdown@4.2.10 --package typedoc dlx typedoc"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
@@ -17,7 +18,8 @@
     "@types/lodash-es": "^4.17.12",
     "glob": "^11.0.0",
     "lodash-es": "^4.17.21",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "@109cafe/dummy": "^0.1.1"
   },
   "nano-staged": {
     "*.{js,ts,cts,mts}": "biome check --write --diagnostic-level=error --no-errors-on-unmatched"
