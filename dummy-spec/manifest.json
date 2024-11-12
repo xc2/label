@@ -2,8 +2,8 @@
   "name": "@109cafe/dummy",
   "version": "0.0.0-PLACEHOLDER",
   "type": "module",
-  "main": "export.js",
-  "types": "export.d.ts",
+  "main": "exports.js",
+  "types": "exports.d.ts",
   "license": "MIT",
   "dependencies": {
     "@109cafe/label": "^0.1.0"
